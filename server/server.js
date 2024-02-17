@@ -7,6 +7,13 @@ const mongoose = require('mongoose')
 // express app
 const app = express()
 
+// middleware
+app.use(express.json())
+
+app.use((req, res, next) => {
+    console.log(req.path, req.method)
+    next()
+})
 
 // routes
 app.use('/api/workouts', workoutRouters)
@@ -24,12 +31,5 @@ mongoose.connect(process.env.MONGO_URI)
         console.log(error)
     })
 
-// middleware
-app.use(express.json())
-
-app.use((req, res, next) => {
-    console.log(req.path, req.method)
-    next()
-})
 
 
