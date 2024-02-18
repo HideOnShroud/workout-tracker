@@ -1,5 +1,5 @@
 
-import { Box, Grid, HStack, SimpleGrid } from '@chakra-ui/react';
+import { Box, SimpleGrid } from '@chakra-ui/react';
 import Workouts from '../components/Workouts';
 import NewWorkout from '../components/NewWorkout';
 
