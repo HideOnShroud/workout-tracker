@@ -1,11 +1,14 @@
 import { Button, Card, CardBody, CardHeader, CardFooter, Text, Box, Spacer, HStack } from "@chakra-ui/react";
 import { Workout } from "../interfaces/WorkoutInterface";
+import useWorkout from "../store";
 
 interface props {
     workout: Workout
 }
 
 const WorkoutComponent = ({ workout }: props) => {
+    const deleteWorkout = useWorkout((state) => state.deleteWorkout)
+
     return (
         <>
             <Card align={'center'} m={5} w={"95%"} key={workout._id}>
@@ -32,7 +35,10 @@ const WorkoutComponent = ({ workout }: props) => {
                             </Text>
                         </Box>
                         <Spacer />
-                        <Button>
+                        <Button
+                            onClick={async () =>
+                                await deleteWorkout(workout._id)
+                            }>
                             <Text textColor={'red'}>Delete</Text>
                         </Button>
                     </HStack>

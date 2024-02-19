@@ -1,32 +1,26 @@
 import { Box, Button, Input } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form } from "react-router-dom";
+import useWorkout from "../store";
 
 const NewWorkout = () => {
     const [title, setTitle] = useState('')
-    const [sets, setSets] = useState('')
-    const [reps, setReps] = useState('')
-    const [load, setLoad] = useState('')
-    const [error, setError] = useState('')
+    const [sets, setSets] = useState("")
+    const [reps, setReps] = useState("")
+    const [load, setLoad] = useState("")
+    const [error, setError] = useState("")
+    const addWorkout = useWorkout((state) => state.addWorkout)
 
     const handleSumbit = async (e: any) => {
-        e.preventDefault()
-        const workout = { title, sets, reps, load }
+        e.preventDefault();
+        const workout = { title, sets: parseInt(sets), reps: parseInt(reps), load: parseInt(load) };
 
-        const response = await fetch('http://localhost:4545/api/workouts', {
-            method: 'POST',
-            body: JSON.stringify(workout),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        const json = await response.json()
-        if (!response.ok) {
-            setError(json.error)
-        }
-        else {
-            setError('')
-        }
+        await addWorkout(workout);
+
+        setTitle('')
+        setReps('')
+        setSets('')
+        setLoad('')
     }
     return (
         <Box textAlign={'center'} position={"sticky"} h={5} top={"5%"} w={"80%"} zIndex={200}>
