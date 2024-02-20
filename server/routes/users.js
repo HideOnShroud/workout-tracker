@@ -1,5 +1,5 @@
 const express = require('express')
-const { loginUser, singupUser } = require("../controllers/userController")
+const { loginUser, signupUser } = require("../controllers/userController")
 
 const router = express.Router()
 
@@ -7,8 +7,8 @@ const router = express.Router()
 router.post('/login', loginUser)
 
 
-// singup route
-router.post('/singup', singupUser)
+// signup route
+router.post('/signup', signupUser)
 
 
 
