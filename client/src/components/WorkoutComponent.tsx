@@ -1,6 +1,6 @@
 import { Button, Card, CardBody, CardHeader, CardFooter, Text, Box, Spacer, HStack } from "@chakra-ui/react";
 import { Workout } from "../interfaces/WorkoutInterface";
-import useWorkout from "../store";
+import { useWorkout } from "../store";
 
 interface props {
     workout: Workout

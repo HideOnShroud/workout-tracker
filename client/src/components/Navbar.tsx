@@ -1,5 +1,5 @@
 import { Button, HStack, Heading, Spacer, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
     return (
@@ -13,8 +13,11 @@ const Navbar = () => {
                 </Heading>
                 <Spacer />
                 <HStack>
-                    <Button><Text>Login</Text></Button>
-                    <Button><Text>Register</Text></Button>
+
+                    <Button><Text><a href="/login">Login</a></Text></Button>
+
+
+                    <Button><Text><a href="/signup">Signup</a></Text></Button>
 
                 </HStack>
             </HStack>
