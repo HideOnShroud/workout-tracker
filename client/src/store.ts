@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { Workout } from './interfaces/WorkoutInterface'
+import { UserInterface } from './interfaces/UserInterface'
 
 
 interface newWorkout {
@@ -17,6 +18,62 @@ interface WorkoutStore {
     deleteWorkout: (id: string) => Promise<void>
 
 }
+
+interface UserStore {
+    user: UserInterface,
+    addUser: (user: { email: string, password: string }) => Promise<void>
+    getUser: (user: { email: string, password: string }) => Promise<void>
+}
+
+const useUser = create<UserStore>((set) => ({
+    user: {
+        email: JSON.parse(localStorage.getItem('user') || '{"email":"", "token":""}').email,
+        token: JSON.parse(localStorage.getItem('user') || '{"email":"", "token":""}').token
+    },
+    addUser: async (user: { email: string, password: string }) => {
+        try {
+            const response = await fetch('http://localhost:4545/api/user/signup', {
+                method: 'POST',
+                body: JSON.stringify(user),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to add user');
+            }
+            const data: UserInterface = await response.json();
+            set({ user: data })
+            localStorage.setItem("user", JSON.stringify(data))
+
+            console.log("done")
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    getUser: async (user: { email: string, password: string }) => {
+        try {
+            const response = await fetch('http://localhost:4545/api/user/login', {
+                method: 'POST',
+                body: JSON.stringify(user),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to add user');
+            }
+            const data: UserInterface = await response.json();
+            set({ user: data })
+            localStorage.setItem("user", JSON.stringify(data))
+            console.log("done")
+        } catch (error) {
+            console.error(error);
+        }
+    },
+
+}))
+
 
 const useWorkout = create<WorkoutStore>((set) => ({
     workout: [],
@@ -45,7 +102,6 @@ const useWorkout = create<WorkoutStore>((set) => ({
             if (!response.ok) {
                 throw new Error('Failed to add workout');
             }
-            // Assuming you want to refresh the list of workouts after adding a new one
             await useWorkout.getState().getWorkout();
         } catch (error) {
             console.error(error);
@@ -66,4 +122,4 @@ const useWorkout = create<WorkoutStore>((set) => ({
 
 }))
 
-export default useWorkout
+export { useWorkout, useUser }
