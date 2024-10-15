@@ -32,7 +32,7 @@ const LoginPage = () => {
 
                     <Button type="submit">Login</Button>
                     <h1>{JSON.stringify(useUser((state) => state.user))}</h1>
-
+                    <h1>{JSON.parse(localStorage.getItem('user') || '{"email":"", "token":""}').token}</h1>
                 </Form>
             </Box>
         </Box>

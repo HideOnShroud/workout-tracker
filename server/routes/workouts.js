@@ -10,7 +10,7 @@ const {
 
 const requireAuth = require('../middleware/requireAuth')
 
-
+// Get AUTH
 router.use(requireAuth)
 
 

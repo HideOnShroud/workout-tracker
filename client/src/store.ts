@@ -36,7 +36,9 @@ const useUser = create<UserStore>((set) => ({
                 method: 'POST',
                 body: JSON.stringify(user),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user') || '{"email":"", "token":""}').token}`
+
                 }
             });
             if (!response.ok) {
@@ -79,7 +81,11 @@ const useWorkout = create<WorkoutStore>((set) => ({
     workout: [],
     getWorkout: async () => {
         try {
-            const response = await fetch('http://localhost:4545/api/workouts');
+            const response = await fetch('http://localhost:4545/api/workouts', {
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user') || '{"email":"", "token":""}').token}`
+                }
+            });
             if (!response.ok) {
                 throw new Error('Failed to fetch workouts');
             }
@@ -96,7 +102,8 @@ const useWorkout = create<WorkoutStore>((set) => ({
                 method: 'POST',
                 body: JSON.stringify(workout),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user') || '{"email":"", "token":""}').token}`
                 }
             });
             if (!response.ok) {
@@ -109,7 +116,10 @@ const useWorkout = create<WorkoutStore>((set) => ({
     },
     deleteWorkout: async (id: string) => {
         const response = await fetch('http://localhost:4545/api/workouts/' + id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user') || '{"email":"", "token":""}').token}`
+            }
         })
         const json = await response.json()
         if (response.ok) {

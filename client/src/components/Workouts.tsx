@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import WorkoutComponent from "./WorkoutComponent";
-import { Workout } from "../interfaces/WorkoutInterface";
 import { useWorkout } from "../store";
 
 
